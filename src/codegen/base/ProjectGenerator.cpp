@@ -261,6 +261,48 @@ void udProjectGenerator::InsertIntoCodemark(const wxString& txt, const wxString&
 	}
 }
 
+void udProjectGenerator::InsertFirstFile(const wxString& txt, const wxFileName& file)
+{	
+	if( file.IsFileReadable() )
+	{
+		wxString sOutput;
+	
+		wxFileInputStream in( file.GetFullPath() );	
+		if( in.IsOk() )
+		{
+			sOutput << txt;
+		}
+		
+		// write output to the file
+		WriteToFile( sOutput, file );
+	}
+}
+
+void udProjectGenerator::InsertEndFile(const wxString& txt, const wxFileName& file)
+{	
+	if( file.IsFileReadable() )
+	{
+		wxString sOutput, sLine;
+	
+
+		wxFileInputStream in( file.GetFullPath() );
+		if( in.IsOk() )
+		{
+			
+			wxTextInputStream tin( in );
+			while( !in.Eof() )
+			{
+				sLine = tin.ReadLine();
+				sOutput << sLine << ENDL;
+			}
+			sOutput << txt;
+		}
+		
+		// write output to the file
+		WriteToFile( sOutput, file );
+	}
+}
+
 wxString udProjectGenerator::GetCodeFromCodemark(const udCodeItem *item, const wxFileName& file)
 {
 	wxString sOutput, sPrevOutput;
@@ -384,7 +426,7 @@ void udProjectGenerator::WriteToFile(const wxString& txt, const wxFileName& file
 		#ifdef __WXMSW__
 		tout.SetMode( wxEOL_UNIX );
 		#endif
-		tout << sOutput;
+		tout << sOutput.ToAscii();
 			
 		out.Close();
 		

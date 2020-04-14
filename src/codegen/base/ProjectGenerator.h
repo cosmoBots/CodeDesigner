@@ -50,6 +50,10 @@ protected:
 	void ClearCodemark(const wxString& mark, const wxFileName& file);
 	void InsertIntoCodemark(const wxString& txt, const wxString& mark, const wxFileName& file);
 	
+
+	void InsertFirstFile(const wxString& txt, const wxFileName& file);
+	void InsertEndFile(const wxString& txt, const wxFileName& file);
+
 	bool CodemarkExists(const wxString& mark, const wxFileName& file);
 	
 	void WriteToFile(const wxString& txt, const wxFileName& file);

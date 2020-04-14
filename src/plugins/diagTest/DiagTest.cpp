@@ -303,6 +303,7 @@ udTestAlgorithm::udTestAlgorithm()
 	// set supported languages
     m_arrSuppLanguages.Add(wxT("udCLanguage"));
     m_arrSuppLanguages.Add(wxT("udCPPLanguage"));
+	m_arrSuppLanguages.Add(wxT("udCPPClassLanguage"));
     m_arrSuppLanguages.Add(wxT("udPythonLanguage"));
 }
 
@@ -316,6 +317,7 @@ udTestAlgorithm::udTestAlgorithm(udGenerator *parent) : udAlgorithm(parent)
 	// set supported languages
     m_arrSuppLanguages.Add(wxT("udCLanguage"));
     m_arrSuppLanguages.Add(wxT("udCPPLanguage"));
+	m_arrSuppLanguages.Add(wxT("udCPPClassLanguage"));
     m_arrSuppLanguages.Add(wxT("udPythonLanguage"));
 }
 

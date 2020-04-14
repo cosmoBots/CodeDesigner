@@ -372,7 +372,7 @@ public:
 	 * \param background Export also diagram background
 	 * \param scale Image scale. If -1 then current canvas scale id used.
 	 */
-	void SaveCanvasToImage(const wxString& file, wxBitmapType type = wxBITMAP_TYPE_BMP, bool background = true, double scale = -1);
+	void SaveCanvasToImage(const wxString& file, wxBitmapType type = wxBITMAP_TYPE_BMP, bool background = true, double scale = -1, bool msg = true);
 
     /*!
      * \brief Start interactive connection creation.

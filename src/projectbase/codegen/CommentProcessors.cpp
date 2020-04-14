@@ -7,6 +7,7 @@ udFunctionComment::udFunctionComment()
 {
 	RegisterDialect( wxT("udCLanguage"), new udCDialect() );
 	RegisterDialect( wxT("udCPPLanguage"), new udCDialect() );
+	RegisterDialect( wxT("udCPPClassLanguage"), new udCDialect() );
 	RegisterDialect( wxT("udPythonLanguage"), new udPythonDialect() );
 }
 
@@ -23,9 +24,11 @@ wxString udFunctionComment::udCDialect::MakeComment(const udProjectItem* obj, ud
 		{
 			wxString sComment;
 			
-			sComment << wxT("!") << ENDL;
+			sComment << wxT("* **************************************************************************** ") << ENDL;
 			// generate 'brief' section
-			sComment << wxT(" \\brief ") << pFcn->GetDescription() << ENDL;
+
+			sComment << pFcn->GetName() << ENDL;
+			sComment << pFcn->GetDescription() << ENDL;
 			
 			// generate 'param' sections
 			SerializableList::compatibility_iterator it = pFcn->GetFirstChildNode();
@@ -33,7 +36,7 @@ wxString udFunctionComment::udCDialect::MakeComment(const udProjectItem* obj, ud
 			{
 				udParamItem *pPar = (udParamItem*) it->GetData();
 				
-				sComment << wxT(" \\param ") << lang->MakeValidIdentifier( pPar->GetName() ) << wxT(" ") << pPar->GetDescription() << ENDL;
+				sComment << wxT(" @param ") << lang->MakeValidIdentifier( pPar->GetName() ) << wxT(" ") << pPar->GetDescription() << ENDL;
 				
 				it = it->GetNext();
 			}
@@ -41,13 +44,15 @@ wxString udFunctionComment::udCDialect::MakeComment(const udProjectItem* obj, ud
 			// generate 'return' section
 			if( pFcn->GetRetValDataType() == udLanguage::DT_USERDEFINED )
 			{
-				if( !pFcn->GetUserRetValDataType().IsEmpty() ) sComment << wxT(" \\return ") << lang->GetValueType( pFcn->GetRetValType() ).Name() << wxT(" of type ") << pFcn->GetUserRetValDataType();
+				if( !pFcn->GetUserRetValDataType().IsEmpty() ) sComment << wxT(" @return ") << lang->GetValueType( pFcn->GetRetValType() ).Name() << wxT(" of type ") << pFcn->GetUserRetValDataType();
 			}
 			else if( pFcn->GetRetValDataType() != udLanguage::DT_VOID )
 			{
-				sComment << wxT(" \\return ") << lang->GetValueType( pFcn->GetRetValType() ).Name() << wxT(" of type ") << lang->GetDataTypeString( pFcn->GetRetValDataType() );
+				sComment << wxT(" @return ") << lang->GetValueType( pFcn->GetRetValType() ).Name() << wxT(" of type ") << lang->GetDataTypeString( pFcn->GetRetValDataType() );
 			}
 			
+			sComment << ENDL << wxT(" **************************************************************************** ");
+
 			return lang->GetCommented( sComment );
 		}
 	}
@@ -97,6 +102,7 @@ udVariableComment::udVariableComment()
 {
 	RegisterDialect( wxT("udCLanguage"), new udCDialect() );
 	RegisterDialect( wxT("udCPPLanguage"), new udCDialect() );
+	RegisterDialect( wxT("udCPPClassLanguage"), new udCDialect() );
 	RegisterDialect( wxT("udPythonLanguage"), new udPythonDialect() );
 }
 
@@ -132,6 +138,7 @@ udClassComment::udClassComment()
 {
 	RegisterDialect( wxT("udCLanguage"), new udCDialect() );
 	RegisterDialect( wxT("udCPPLanguage"), new udCDialect() );
+	RegisterDialect( wxT("udCPPClassLanguage"), new udCDialect() );
 	RegisterDialect( wxT("udPythonLanguage"), new udPythonDialect() );
 }
 

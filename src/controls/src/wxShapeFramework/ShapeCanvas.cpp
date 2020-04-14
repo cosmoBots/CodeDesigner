@@ -2139,7 +2139,7 @@ void wxSFShapeCanvas::SaveCanvasToBMP(const wxString& file)
 	SaveCanvasToImage( file );
 }
 
-void wxSFShapeCanvas::SaveCanvasToImage(const wxString& file, wxBitmapType type, bool background, double scale)
+void wxSFShapeCanvas::SaveCanvasToImage(const wxString& file, wxBitmapType type, bool background, double scale, bool msg)
 {
     // create memory DC a draw the canvas content into
 	
@@ -2188,12 +2188,18 @@ void wxSFShapeCanvas::SaveCanvasToImage(const wxString& file, wxBitmapType type,
 		
 		if( scale != prevScale ) SetScale( prevScale );
 		
-        if( outbmp.SaveFile(file, type) ) wxMessageBox(wxString::Format(wxT("The image has been saved to '%s'."), file.GetData()), wxT("ShapeFramework"));
-		else
+        if( outbmp.SaveFile(file, type) ){
+			if (msg) {
+				wxMessageBox(wxString::Format(wxT("The image has been saved to '%s'."), file.GetData()), wxT("ShapeFramework"));
+			}
+		} 
+		else if (msg) {
 			 wxMessageBox(wxT("Unable to save image to ") + file + wxT("."), wxT("wxShapeFramework"), wxOK | wxICON_ERROR);
+		}
     }
-    else
+    else if (msg) {
         wxMessageBox(wxT("Could not create output bitmap."), wxT("wxShapeFramework"), wxOK | wxICON_ERROR);
+	}
 }
 
 void wxSFShapeCanvas::GetSelectedShapes(ShapeList& selection)

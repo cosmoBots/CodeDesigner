@@ -22,6 +22,7 @@ udLoopCaseAlgorithm::udLoopCaseAlgorithm()
 
     m_arrSuppLanguages.Add(wxT("udCLanguage"));
     m_arrSuppLanguages.Add(wxT("udCPPLanguage"));
+    m_arrSuppLanguages.Add(wxT("udCPPClassLanguage"));
 }
 
 udLoopCaseAlgorithm::udLoopCaseAlgorithm(udGenerator *parent) : udAlgorithm(parent)
@@ -42,6 +43,7 @@ udLoopCaseAlgorithm::udLoopCaseAlgorithm(udGenerator *parent) : udAlgorithm(pare
 
     m_arrSuppLanguages.Add(wxT("udCLanguage"));
     m_arrSuppLanguages.Add(wxT("udCPPLanguage"));
+    m_arrSuppLanguages.Add(wxT("udCPPClassLanguage"));
 }
 
 udLoopCaseAlgorithm::~udLoopCaseAlgorithm()
@@ -89,6 +91,9 @@ void udLoopCaseAlgorithm::ProcessAlgorithm(udDiagramItem *src)
 		}
 		else
 		{
+            pLang->WriteCodeBlocks(wxT("/** ***************************************************"));
+            pLang->WriteCodeBlocks(pSCH->GetDescription());
+            pLang->WriteCodeBlocks(wxT("*************************************************** */"));
 			if( fHasFinalState )
 				pLang->FunctionDefCmd(wxT("STATE_T"), m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()), wxEmptyString );
 			else

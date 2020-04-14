@@ -320,6 +320,7 @@ bool udStateChartGenerator::GenerateDefinition(udDiagramItem* src)
 void udStateChartGenerator::GenerateIDs(udDiagramItem *src)
 {
 	ShapeList lstElements;
+	ShapeList finalItem;
 	udProjectItem *pElement;
 	
 	// create identifiers
@@ -329,7 +330,7 @@ void udStateChartGenerator::GenerateIDs(udDiagramItem *src)
 	
 		src->GetDiagramManager().GetShapes( CLASSINFO(umlInitialItem), lstElements );
 		src->GetDiagramManager().GetShapes( CLASSINFO(umlHistoryItem), lstElements  );
-		src->GetDiagramManager().GetShapes( CLASSINFO(umlFinalItem), lstElements  );
+		src->GetDiagramManager().GetShapes( CLASSINFO(umlFinalItem), finalItem  );
 		src->GetDiagramManager().GetShapes( CLASSINFO(umlSimpleStateItem), lstElements  );
 		src->GetDiagramManager().GetShapes( CLASSINFO(umlSubStateItem), lstElements  );
 		src->GetDiagramManager().GetShapes( CLASSINFO(umlDecisionItem), lstElements  );
@@ -340,6 +341,14 @@ void udStateChartGenerator::GenerateIDs(udDiagramItem *src)
 			pElement = (udProjectItem*) node->GetData()->GetUserData();
 			m_pOutLang->DefineCmd( pElement->GetUniqueId( m_pOutLang ), wxString::Format( wxT("%d"), m_nIDCounter++ ) );
 			node = node->GetNext();
+		}
+
+		ShapeList::compatibility_iterator nodeEnd = finalItem.GetFirst();
+		while( nodeEnd )
+		{
+			pElement = (udProjectItem*) nodeEnd->GetData()->GetUserData();
+			m_pOutLang->DefineCmd( pElement->GetUniqueId( m_pOutLang ), wxString::Format( wxT("%d"), -1 * m_nIDCounter++ ) );
+			nodeEnd = nodeEnd->GetNext();
 		}
 	}
 	

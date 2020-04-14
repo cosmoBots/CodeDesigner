@@ -22,6 +22,7 @@ udElifAlgorithm::udElifAlgorithm()
 
     m_arrSuppLanguages.Add(wxT("udCLanguage"));
     m_arrSuppLanguages.Add(wxT("udCPPLanguage"));
+    m_arrSuppLanguages.Add(wxT("udCPPClassLanguage"));
     m_arrSuppLanguages.Add(wxT("udPythonLanguage"));
 }
 
@@ -43,6 +44,7 @@ udElifAlgorithm::udElifAlgorithm(udGenerator *parent) : udAlgorithm(parent)
 
     m_arrSuppLanguages.Add(wxT("udCLanguage"));
     m_arrSuppLanguages.Add(wxT("udCPPLanguage"));
+    m_arrSuppLanguages.Add(wxT("udCPPClassLanguage"));
     m_arrSuppLanguages.Add(wxT("udPythonLanguage"));
 }
 

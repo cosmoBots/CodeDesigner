@@ -1533,7 +1533,7 @@ void UMLDesignerFrame::OnExportDiagram( wxCommandEvent &event )
 					break;
 			}
 			
-			GetActiveCanvas()->SaveCanvasToImage( dlg.GetPath(), type, wxGetApp().GetSettings().GetProperty( wxT("Export canvas background") )->AsBool() );
+			GetActiveCanvas()->SaveCanvasToImage( dlg.GetPath(), type, wxGetApp().GetSettings().GetProperty( wxT("Export canvas background") )->AsBool());
 			
 		} else {
 			udDiagramCanvas *canvas = GetActiveCanvas();

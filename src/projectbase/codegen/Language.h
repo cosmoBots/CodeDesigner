@@ -85,7 +85,8 @@ public:
 	enum FILEEXTENSION
 	{
 		FE_DECL = 0,
-		FE_IMPL
+		FE_IMPL,
+        FE_DOC
 	};
 
 	// public functions
@@ -97,6 +98,8 @@ public:
     inline void SetNewLineString(const wxString& nl){m_sNewLineStr = nl;}
     inline void SetName(const wxString& name){m_sName = name;}
     inline void SetDescription(const wxString& desc){m_sDescription = desc;}
+    inline void SetFuncClass(const wxString& className){m_sFuncClass = className;}
+    inline void SetTypeClass(const wxString& className){m_sTypeClass = className;}
 
     inline int GetIndentation() const {return m_nIndentation;}
     inline long GetStcLanguageType() const {return m_nStcLangType;}
@@ -105,6 +108,8 @@ public:
     inline const wxString& GetNewLineString() const {return m_sNewLineStr;}
     inline const wxString& GetName() const {return m_sName;}
     inline const wxString& GetDescription() const {return m_sDescription;}
+    inline const wxString& SetFuncClass() const {return m_sFuncClass;}
+    inline const wxString& SetTypeClass() const {return m_sTypeClass;}
 
     static wxString GetFormalDataTypeString(DATATYPE dt);
     wxString GetDataTypeString(DATATYPE dt) const;
@@ -222,7 +227,9 @@ protected:
 
     wxString m_sName;
     wxString m_sDescription;
-	
+	wxString m_sFuncClass;
+    wxString m_sTypeClass;
+
 	wxArrayString m_arrCodeBuffer;
 	int m_nCodeBufferIndex;
 	

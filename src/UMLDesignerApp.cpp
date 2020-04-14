@@ -25,8 +25,10 @@
 #include "UMLDesignerMain.h"
 #include "codegen/languages/CLanguage.h"
 #include "codegen/languages/CPPLanguage.h"
+#include "codegen/languages/CPPClassLanguage.h"
 #include "codegen/languages/PythonLanguage.h"
 #include "codegen/CProjectGenerator.h"
+#include "codegen/CPPClassProjectGenerator.h"
 #include "codegen/PythonProjectGenerator.h"
 #include "XS2PG.h"
 #include "Art.h"
@@ -373,11 +375,13 @@ void UMLDesignerApp::InitLanguages()
 {
 	m_mapLanguages[wxT("udCLanguage")] = new udCLanguage();
     m_mapLanguages[wxT("udCPPLanguage")] = new udCPPLanguage();
+	m_mapLanguages[wxT("udCPPClassLanguage")] = new udCPPClassLanguage();
     m_mapLanguages[wxT("udPythonLanguage")] = new udPythonLanguage();
     //m_mapLanguages[wxT("udLanguage")] = new udLanguage(); // only for testing purposes!
 
     m_mapProjGenerators[wxT("udCLanguage")] = new udCProjectGenerator();
     m_mapProjGenerators[wxT("udCPPLanguage")] = new udCProjectGenerator();
+	m_mapProjGenerators[wxT("udCPPClassLanguage")] = new udCPPClassProjectGenerator();
     m_mapProjGenerators[wxT("udPythonLanguage")] = new udPythonProjectGenerator();
 }
 

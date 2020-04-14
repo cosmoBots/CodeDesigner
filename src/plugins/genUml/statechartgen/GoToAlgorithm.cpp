@@ -23,6 +23,7 @@ udGOTOAlgorithm::udGOTOAlgorithm()
 
     m_arrSuppLanguages.Add(wxT("udCLanguage"));
     m_arrSuppLanguages.Add(wxT("udCPPLanguage"));
+    m_arrSuppLanguages.Add(wxT("udCPPClassLanguage"));
 }
 
 udGOTOAlgorithm::udGOTOAlgorithm(udGenerator *parent) : udAlgorithm(parent)
@@ -43,6 +44,7 @@ udGOTOAlgorithm::udGOTOAlgorithm(udGenerator *parent) : udAlgorithm(parent)
 
     m_arrSuppLanguages.Add(wxT("udCLanguage"));
     m_arrSuppLanguages.Add(wxT("udCPPLanguage"));
+    m_arrSuppLanguages.Add(wxT("udCPPClassLanguage"));
 }
 
 udGOTOAlgorithm::~udGOTOAlgorithm()
