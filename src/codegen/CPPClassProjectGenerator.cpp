@@ -117,8 +117,8 @@ void udCPPClassProjectGenerator::ProcessProject(udProject *src)
 		// Common functions
 		// Insert ifndef 
 
-		wxString commentarios = wxT(" @author Jorge Quintero Nehrkorn");
-		commentarios = commentarios + ENDL + wxT(" @copyright IAC");
+		wxString commentarios = wxT(" @author ---");
+		commentarios = commentarios + ENDL + wxT(" @copyright ---");
 		commentarios = commentarios + ENDL + wxT(" @brief Common functions.");
 		commentarios = commentarios + ENDL + wxT(" @warning <b>THIS IS A AUCTOMATIC GENERATION FILE. DON'T EDIT.</b> ");
 
@@ -131,10 +131,10 @@ void udCPPClassProjectGenerator::ProcessProject(udProject *src)
 
 		InsertEndFile ( wxString::Format( wxT("#include <stdio.h>")), HeaderFile );
 		InsertEndFile ( wxString::Format( wxT("#include <stdlib.h>")) << ENDL, HeaderFile	);
-		InsertEndFile ( wxString::Format( wxT("#include \"Utiles.h\"")) << ENDL, HeaderFile );
+		InsertEndFile ( wxString::Format( wxT("#include \"FSMachine.h\"")) << ENDL, HeaderFile );
 
 		// Insert class definition
-		InsertEndFile ( wxString::Format( wxT("class %s : public Utiles {"), HeaderFile.GetName() ) << ENDL,  HeaderFile );
+		InsertEndFile ( wxString::Format( wxT("class %s : public FSMachine {"), HeaderFile.GetName() ) << ENDL,  HeaderFile );
 
 		// **********************************************************************************************************************************************
 			
@@ -150,7 +150,7 @@ void udCPPClassProjectGenerator::ProcessProject(udProject *src)
 		// ************************************************************************************************
 
 		// Doxygen Documentation File
-		WriteToFile(  wxString::Format(wxT("/**")) << ENDL << wxString::Format( wxT("@defgroup %s Secuencias "), DocFile.GetName() ) << ENDL, DocFile );
+		WriteToFile(  wxString::Format(wxT("/**")) << ENDL << wxString::Format( wxT("@defgroup %s FSMs "), DocFile.GetName() ) << ENDL, DocFile );
 		InsertEndFile(  wxString::Format(wxT("<table>")) << ENDL, DocFile );
 		
 		// ************************************************************************************************

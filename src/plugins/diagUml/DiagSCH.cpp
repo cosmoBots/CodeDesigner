@@ -38,7 +38,7 @@ udSStateChartDiagramItem::udSStateChartDiagramItem()
     m_sActiveGenerator = wxT("udSStateChartGenerator");
     m_sActiveAlgorithm = wxT("udLoopCaseAlgorithm");
 	m_sInputAction = wxT("<none>");
-	m_fNonBlocking = false;
+	m_fNonBlocking = true;
 	m_fInline = false;
 	
 	XS_SERIALIZE(m_sInputAction, wxT("input_action"));
