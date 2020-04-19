@@ -32,15 +32,16 @@ void udEISimpleStateProcessor::ProcessElement(wxSFShapeBase *element)
     udLanguage *pLang = m_pParentGenerator->GetActiveLanguage();
     //wxSFShapeBase *pNext = m_pParentGenerator->GetAlgorithm()->GetNextElement();
     wxSFShapeBase *pPrev = m_pParentGenerator->GetActiveAlgorithm()->GetPrevElement();
-
+	udSStateChartDiagramItem *pSCH = wxDynamicCast( ((udElifAlgorithm*)m_pParentGenerator->GetActiveAlgorithm())->GetProcessedDiagram(), udSStateChartDiagramItem );
+	
     // create 'if' statement
     if(!pPrev)
     {
-        pLang->IfCmd(wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
+        pLang->IfCmd(m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
     }
     else
     {
-        pLang->ElseIfCmd(wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
+        pLang->ElseIfCmd(m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
     }
 
     pLang->BeginCmd();
@@ -93,14 +94,15 @@ void udEISubStateProcessor::ProcessElement(wxSFShapeBase *element)
 	} else if( pSubElement->IsKindOf(CLASSINFO(udHCHSubDiagramElementItem)) ) {
 		fStoreRetVal = ((udHCHSubDiagramElementItem*)pSubElement)->GetStoreRetVal();
 	}
+	udSStateChartDiagramItem *pSCH = wxDynamicCast( ((udElifAlgorithm*)m_pParentGenerator->GetActiveAlgorithm())->GetProcessedDiagram(), udSStateChartDiagramItem );
 	
     if(!pPrev)
     {
-        pLang->IfCmd(wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
+        pLang->IfCmd(m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
     }
     else
     {
-        pLang->ElseIfCmd(wxT("state")  + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
+        pLang->ElseIfCmd(m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state")  + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
     }
     pLang->BeginCmd();
     pLang->SingleLineCommentCmd(wxT("call substate function"));
@@ -185,13 +187,15 @@ void udEIHistoryProcessor::ProcessElement(wxSFShapeBase *element)
 	bool fActionExist;
 
     // create 'if' statement
+	udSStateChartDiagramItem *pSCH = wxDynamicCast( ((udElifAlgorithm*)m_pParentGenerator->GetActiveAlgorithm())->GetProcessedDiagram(), udSStateChartDiagramItem );
+	
     if(!pPrev)
     {
-        pLang->IfCmd(wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
+        pLang->IfCmd(m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
     }
     else
     {
-        pLang->ElseIfCmd(wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
+        pLang->ElseIfCmd(m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
     }
 
     pLang->BeginCmd();	
@@ -250,7 +254,7 @@ void udEIHistoryProcessor::ProcessElement(wxSFShapeBase *element)
 		node = node->GetNext();
 	}
 	
-    pLang->VariableAssignCmd( wxT("state"), pLang->MakeValidIdentifier( udLABEL::GetContent( element, udLABEL::ltTITLE ).Lower() ) );
+    pLang->VariableAssignCmd( m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), pLang->MakeValidIdentifier( udLABEL::GetContent( element, udLABEL::ltTITLE ).Lower() ) );
     pLang->EndCmd();
 }
 
@@ -299,16 +303,16 @@ void udEIFinalItemProcessor::ProcessElement(wxSFShapeBase *element)
 
     if(!pPrev)
     {
-        pLang->IfCmd(wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
+        pLang->IfCmd(m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
     }
     else
     {
-        pLang->ElseIfCmd(wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
+        pLang->ElseIfCmd(m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state") + pLang->Equal() + m_pParentGenerator->MakeIDName(element));
     }
     pLang->BeginCmd();
 	
 	// reset "state" variable in non-blocking state chart to the initial value
-	if( fNonBlocking ) pLang->VariableAssignCmd( wxT("state"), m_pParentGenerator->MakeIDName(pInitial));
+	if( fNonBlocking ) pLang->VariableAssignCmd( m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), m_pParentGenerator->MakeIDName(pInitial));
 	
 	if( !pParent )
 	{

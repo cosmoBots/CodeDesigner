@@ -224,7 +224,6 @@ bool udStateChartGenerator::GenerateDeclaration(udDiagramItem* src)
 	{
 		// initialize output stream
 		wxTextOutputStream textOut(*m_pOut);
-		
 		// generate IDs (if suitable)
 		if( m_pOutLang->HasSeparatedDecl() ) GenerateIDs( pSCH );
 		
@@ -243,14 +242,18 @@ bool udStateChartGenerator::GenerateDeclaration(udDiagramItem* src)
 				}
 			}
 			else
-			{
+			{			
 				if( pSCH->GetDiagramManager().Contains(CLASSINFO(umlFinalItem)) )
+				{
 					m_pOutLang->FunctionDeclCmd(wxT("STATE_T"), m_pOutLang->MakeValidIdentifier( pSCH->GetName() ), wxEmptyString );
+				}
 				else
+				{
 					m_pOutLang->FunctionDeclCmd(m_pOutLang->GetDataTypeString(udLanguage::DT_VOID), m_pOutLang->MakeValidIdentifier( pSCH->GetName() ), wxEmptyString );
+				}
 			}
 		}
-			
+
 		textOut << m_pOutLang->GetCodeBuffer();		
 	}
 	

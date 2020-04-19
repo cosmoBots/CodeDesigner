@@ -144,7 +144,7 @@ void udLCEITransitionProcessor::ProcessElement(wxSFShapeBase *element)
 			pLang->VariableAssignCmd( pLang->MakeValidIdentifier( udLABEL::GetContent( pHistory, udLABEL::ltTITLE ).Lower() ), m_pParentGenerator->MakeIDName(element));
 		
 		if( pTrgShape != element )
-			pLang->VariableAssignCmd( wxT("state"), m_pParentGenerator->MakeIDName(pTrgShape));
+			pLang->VariableAssignCmd( m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), m_pParentGenerator->MakeIDName(pTrgShape));
 		
         if( fIndent ) pLang->EndCmd();
 

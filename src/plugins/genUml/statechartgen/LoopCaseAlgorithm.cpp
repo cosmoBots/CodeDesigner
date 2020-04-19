@@ -94,10 +94,20 @@ void udLoopCaseAlgorithm::ProcessAlgorithm(udDiagramItem *src)
             pLang->WriteCodeBlocks(wxT("/** ***************************************************"));
             pLang->WriteCodeBlocks(pSCH->GetDescription());
             pLang->WriteCodeBlocks(wxT("*************************************************** */"));
-			if( fHasFinalState )
+            
+            if( !lstInitialStates.IsEmpty() ){
+                // declare state variable
+                pLang->SingleLineCommentCmd( wxT("set initial state") );
+                wxSFShapeBase *pInitial = lstInitialStates.GetFirst()->GetData();
+                pLang->VariableDeclAssignCmd( wxT("STATE_T"), m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), m_pParentGenerator->MakeIDName(pInitial) );
+            }
+
+			if( fHasFinalState ){
 				pLang->FunctionDefCmd(wxT("STATE_T"), m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()), wxEmptyString );
-			else
+            }
+			else{
 				pLang->FunctionDefCmd(pLang->GetDataTypeString(udLanguage::DT_VOID), m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()), wxEmptyString );
+            }
 		}			
 		pLang->BeginCmd();
 	}
@@ -108,14 +118,16 @@ void udLoopCaseAlgorithm::ProcessAlgorithm(udDiagramItem *src)
 
         wxSFShapeBase *pHistory, *pTarget, *pInitial = lstInitialStates.GetFirst()->GetData();
 		
+
+/*		
+        Moved to outside of the function
         // declare state variable
         pLang->SingleLineCommentCmd( wxT("set initial state") );
-		
 		if( fNonBlocking )
-			pLang->VariableDeclAssignCmd( wxT("static STATE_T"), wxT("state"), m_pParentGenerator->MakeIDName(pInitial) );
+			pLang->VariableDeclAssignCmd( wxT("static STATE_T"), m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), m_pParentGenerator->MakeIDName(pInitial) );
 		else
-			pLang->VariableDeclAssignCmd( wxT("STATE_T"), wxT("state"), m_pParentGenerator->MakeIDName(pInitial) );
-		
+			pLang->VariableDeclAssignCmd( wxT("STATE_T"), m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), m_pParentGenerator->MakeIDName(pInitial) );
+*/		
 		// declare all history states and set history variables to proper values
 		if( src->IsKindOf( CLASSINFO(udHStateChartDiagramItem) ) )
 		{
@@ -169,7 +181,7 @@ void udLoopCaseAlgorithm::ProcessAlgorithm(udDiagramItem *src)
 			pLang->SingleLineCommentCmd( wxT("State machine") );
 		}
 			
-        pLang->SwitchCmd( wxT("state") );
+        pLang->SwitchCmd( m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state") );
         pLang->BeginCmd();
 
         // process diagram items (only one initial state is assumed)
@@ -180,7 +192,7 @@ void udLoopCaseAlgorithm::ProcessAlgorithm(udDiagramItem *src)
 		/*else if( !pSCH->IsInline() && fHasFinalState )
 		{
 			pLang->NewLine();
-			pLang->ReturnCmd( wxT("state") );
+			pLang->ReturnCmd( m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state") );
 		}*/
     }
 

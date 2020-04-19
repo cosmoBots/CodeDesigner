@@ -108,11 +108,11 @@ void udElifAlgorithm::ProcessAlgorithm(udDiagramItem *src)
 		
         // declare state variable
         pLang->SingleLineCommentCmd(wxT("set initial state"));
-        //pLang->VariableDeclAssignCmd(wxT("STATE_T"), wxT("state"), wxString::Format(wxT("%d"), ((udDiagElementItem*)pInitial->GetUserData())->GetElementId()));
+        //pLang->VariableDeclAssignCmd(wxT("STATE_T"), m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), wxString::Format(wxT("%d"), ((udDiagElementItem*)pInitial->GetUserData())->GetElementId()));
 		if( fNonBlocking )
-			pLang->VariableDeclAssignCmd(wxT("static STATE_T"), wxT("state"), m_pParentGenerator->MakeIDName(pInitial));
+			pLang->VariableDeclAssignCmd(wxT("static STATE_T"), m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), m_pParentGenerator->MakeIDName(pInitial));
 		else
-			pLang->VariableDeclAssignCmd(wxT("STATE_T"), wxT("state"), m_pParentGenerator->MakeIDName(pInitial));
+			pLang->VariableDeclAssignCmd(wxT("STATE_T"), m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), m_pParentGenerator->MakeIDName(pInitial));
 		
 		// declare all history states and set history variables to proper values
 		if( src->IsKindOf( CLASSINFO(udHStateChartDiagramItem) ) )
@@ -173,7 +173,7 @@ void udElifAlgorithm::ProcessAlgorithm(udDiagramItem *src)
 		/*else if( !pSCH->IsInline() && fHasFinalState )
 		{
 			pLang->NewLine();
-			pLang->ReturnCmd( wxT("state") );
+			pLang->ReturnCmd( m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state") );
 		}*/
     }
 

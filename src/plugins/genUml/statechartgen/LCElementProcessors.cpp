@@ -295,8 +295,9 @@ void udLCHistoryProcessor::ProcessElement(wxSFShapeBase *element)
 	}
 	
 	pLang->EndCmd();
-	
-	pLang->VariableAssignCmd( wxT("state"), pLang->MakeValidIdentifier( udLABEL::GetContent( element, udLABEL::ltTITLE ).Lower() ) );
+	udSStateChartDiagramItem *pSCH = wxDynamicCast( ((udLoopCaseAlgorithm*)m_pParentGenerator->GetActiveAlgorithm())->GetProcessedDiagram(), udSStateChartDiagramItem );
+		
+	pLang->VariableAssignCmd( m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), pLang->MakeValidIdentifier( udLABEL::GetContent( element, udLABEL::ltTITLE ).Lower() ) );
 	
 	pLang->BreakCmd();
     pLang->NewLine();
@@ -349,7 +350,7 @@ void udLCFinalItemProcessor::ProcessElement(wxSFShapeBase *element)
 	pLang->BeginCmd();
 	
 	// reset "state" variable in non-blocking state chart to the initial value
-	if( fNonBlocking ) pLang->VariableAssignCmd( wxT("state"), m_pParentGenerator->MakeIDName(pInitial));
+	if( fNonBlocking ) pLang->VariableAssignCmd( m_pParentGenerator->MakeValidIdentifier(pSCH->GetName()) + wxT("state"), m_pParentGenerator->MakeIDName(pInitial));
 	
 	// generate "return" statement
 	if( !pParent )
