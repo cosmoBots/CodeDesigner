@@ -118,7 +118,7 @@ bool udStateChartGenerator::GenerateCommonDeclaration()
 	
 	// define STATE_T type
 	m_pOutLang->SingleLineCommentCmd( wxT("State ID data type") );
-	m_pOutLang->TypedefCmd( wxT("STATE_T"), m_pOutLang->GetDataTypeString(udLanguage::DT_UINT32) );
+	m_pOutLang->TypedefCmd( wxT("STATE_T"), m_pOutLang->GetDataTypeString(udLanguage::DT_LONG) );
 	m_pOutLang->NewLine();
 	
 	// create declarations of non-inlined conditions and functions
